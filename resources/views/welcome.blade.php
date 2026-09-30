@@ -16,10 +16,10 @@
 <body>
     <div class="card">
         <h1>6CS056 - Workshop 1</h1>
-        <p><strong>Available Modules:</strong></p>
+        <p><strong>Database Courses:</strong></p>
         <ul>
-            @foreach($modules as $code => $name)
-                <li>{{ $code }}: <span>{{ $name }}</span></li>
+            @foreach($courses as $course)
+                <li>{{ $course->code }}: <span>{{ $course->name }}</span></li>
             @endforeach
         </ul>
     </div>
