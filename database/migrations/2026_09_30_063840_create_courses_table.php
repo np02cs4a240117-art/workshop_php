@@ -10,8 +10,12 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
             $table->string('name');
+            $table->text('description')->nullable();
+            $table->integer('duration');
+            $table->decimal('fee', 8, 2);
+            $table->enum('difficulty', ['Easy', 'Medium', 'Hard'])->default('Easy');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
