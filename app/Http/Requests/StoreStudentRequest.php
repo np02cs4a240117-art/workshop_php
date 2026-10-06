@@ -14,11 +14,11 @@ class StoreStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'required|string|max:255',
-            'email'         => 'required|email|max:255|unique:students,email',
-            'phone'         => 'required|string|max:20',
-            'address'       => 'nullable|string|max:500',
-            'date_of_birth' => 'nullable|date',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students,email',
+            'phone' => 'required|string',
+            'address' => 'nullable|string',
+            'dob' => 'nullable|date',
         ];
     }
 }

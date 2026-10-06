@@ -14,10 +14,10 @@ class Student extends Model
         'email',
         'phone',
         'address',
-        'date_of_birth',
+        'dob',
     ];
 
     protected $casts = [
-        'date_of_birth' => 'date',
+        'dob' => 'date',
     ];
 }
