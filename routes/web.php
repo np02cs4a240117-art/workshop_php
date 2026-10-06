@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
-    return redirect('/contacts');
+    return redirect()->route('students.index');
 });
 
-Route::resource('contacts', ContactController::class);
+// Student Resource Routes (Index, Create, Store, Show, Edit, Update, Destroy)
+Route::resource('students', StudentController::class);

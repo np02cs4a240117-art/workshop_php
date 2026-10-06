@@ -1,35 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head><title>Courses</title></head>
-<body>
-    <h1>Courses List</h1>
-    @if(session('success')) <p style="color: green;">{{ session('success') }}</p> @endif
-    <a href="/courses/create">Create Course</a> | <a href="/students">View Students</a><br><br>
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr><th>ID</th><th>Name</th><th>Duration (weeks)</th><th>Fee</th><th>Difficulty</th><th>Actions</th></tr>
-        </thead>
-        <tbody>
-            @forelse($courses as $course)
-                <tr>
-                    <td>{{ $course->id }}</td>
-                    <td>{{ $course->name }}</td>
-                    <td>{{ $course->duration }}</td>
-                    <td>${{ $course->fee }}</td>
-                    <td>{{ $course->difficulty }}</td>
-                    <td>
-                        <a href="/courses/{{ $course->id }}">View</a>
-                        <a href="/courses/{{ $course->id }}/edit">Edit</a>
-                        <form action="/courses/{{ $course->id }}" method="POST" style="display:inline">
-                            @csrf @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr><td colspan="6">No courses found.</td></tr>
-            @endforelse
-        </tbody>
-    </table>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Course List</h2>
+    <a href="{{ route('courses.create') }}" class="btn btn-primary">Add New Course</a>
+</div>
+
+<table class="table table-bordered bg-white shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Credits</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse($courses as $course)
+            <tr>
+                <td>{{ $course->code }}</td>
+                <td>{{ $course->name }}</td>
+                <td>{{ $course->credits }}</td>
+                <td>
+                    <a href="{{ route('courses.show', $course->id) }}" class="btn btn-sm btn-info text-white">View</a>
+                    <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this course?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="4" class="text-center">No courses found.</td>
+            </tr>
+        @endforelse
+    </tbody>
+</table>
+@endsection

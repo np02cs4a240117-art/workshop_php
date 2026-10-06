@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head><title>Course Details</title></head>
-<body>
-    <h1>Course Details</h1>
-    <p><strong>ID:</strong> {{ $course->id }}</p>
-    <p><strong>Name:</strong> {{ $course->name }}</p>
-    <p><strong>Description:</strong> {{ $course->description }}</p>
-    <p><strong>Duration:</strong> {{ $course->duration }} weeks</p>
-    <p><strong>Fee:</strong> ${{ $course->fee }}</p>
-    <p><strong>Difficulty:</strong> {{ $course->difficulty }}</p>
-    <a href="/courses/{{ $course->id }}/edit">Edit Course</a> | <a href="/courses">Back to Courses</a>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+<div class="card shadow-sm col-md-8 mx-auto">
+    <div class="card-header bg-info text-white">
+        <h4 class="mb-0">Course Details</h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Code:</strong> {{ $course->code }}</p>
+        <p><strong>Name:</strong> {{ $course->name }}</p>
+        <p><strong>Credits:</strong> {{ $course->credits }}</p>
+        <p><strong>Description:</strong> {{ $course->description ?? 'N/A' }}</p>
+        <hr>
+        <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-warning">Edit</a>
+        <a href="{{ route('courses.index') }}" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+@endsection

@@ -1,28 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head><title>Edit Course</title></head>
-<body>
-    <h1>Edit Course</h1>
-    @if($errors->any())
-        <div style="color: red;">
-            <ul>@foreach($errors->all() as $error) <li>{{ $error }}</li> @endforeach</ul>
-        </div>
-    @endif
-    <form action="/courses/{{ $course->id }}" method="POST">
-        @csrf @method('PUT')
-        <div><label>Course Name</label><br><input type="text" name="name" value="{{ old('name', $course->name) }}"></div><br>
-        <div><label>Description</label><br><textarea name="description">{{ old('description', $course->description) }}</textarea></div><br>
-        <div><label>Duration (in weeks)</label><br><input type="number" name="duration" value="{{ old('duration', $course->duration) }}"></div><br>
-        <div><label>Fee</label><br><input type="number" step="0.01" name="fee" value="{{ old('fee', $course->fee) }}"></div><br>
-        <div><label>Difficulty</label><br>
-            <select name="difficulty">
-                <option value="Easy" {{ old('difficulty', $course->difficulty) == 'Easy' ? 'selected' : '' }}>Easy</option>
-                <option value="Medium" {{ old('difficulty', $course->difficulty) == 'Medium' ? 'selected' : '' }}>Medium</option>
-                <option value="Hard" {{ old('difficulty', $course->difficulty) == 'Hard' ? 'selected' : '' }}>Hard</option>
-            </select>
-        </div><br>
-        <button type="submit">Update Course</button>
-    </form>
-    <br><a href="/courses">Back to Courses</a>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+<div class="card shadow-sm col-md-8 mx-auto">
+    <div class="card-header bg-warning">
+        <h4 class="mb-0">Edit Course</h4>
+    </div>
+    <div class="card-body">
+        <form action="{{ route('courses.update', $course->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-3">
+                <label class="form-label">Course Code</label>
+                <input type="text" name="code" class="form-control @error('code') is-invalid @enderror" value="{{ old('code', $course->code) }}">
+                @error('code') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Course Name</label>
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $course->name) }}">
+                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Credits</label>
+                <input type="number" name="credits" class="form-control @error('credits') is-invalid @enderror" value="{{ old('credits', $course->credits) }}">
+                @error('credits') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="3">{{ old('description', $course->description) }}</textarea>
+                @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Course</button>
+            <a href="{{ route('courses.index') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+@endsection
